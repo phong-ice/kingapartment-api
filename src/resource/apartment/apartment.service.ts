@@ -64,7 +64,7 @@ export default class ApartmentService {
     });
   }
 
-  public getApartmentPopular() {
+  public getApartmentPopular(): Promise<any> {
     return new Promise((resolve, rejects) => {
       this.apartmentModel
         .countDocuments({})
@@ -74,7 +74,7 @@ export default class ApartmentService {
             .sort({ countVisit: -1 })
             .lean()
             .then((apartments) => {
-              resolve({ apartments, sumApartment: sumDocument });
+              resolve({ result: apartments, sumApartment: sumDocument });
             })
             .catch((err) => rejects(err));
         })
@@ -122,7 +122,7 @@ export default class ApartmentService {
             if (distance1 > distance2) return 0;
             return 0;
           });
-          resolve({ apartments });
+          resolve({ result: apartments });
         }
       } catch (err) {
         rejects(err);
