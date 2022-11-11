@@ -100,7 +100,7 @@ export default class ApartmentController implements Controller {
         );
         res.status(200).json({
           status: STATUS_SUCCESS,
-          apartments: apartments.apartments,
+          apartments: apartments,
         });
       } catch (err) {
         res.status(400).json({
@@ -192,8 +192,8 @@ export default class ApartmentController implements Controller {
       upload.array('images'),
       verifyAccessToken,
       (req: Request, res: Response) => {
-        const fullnameAdmin = req.body.fullname;
-        const _idAdmin = req.body._id;
+        const fullnameAdmin = req.body.info.fullname;
+        const _idAdmin = req.body.info._id;
         const files = req.files;
         var pathPhotos: string[] = [];
         if (files) {
@@ -208,7 +208,7 @@ export default class ApartmentController implements Controller {
           });
         }
         const apartment = req.body as Apartment;
-        apartment.createBy = fullnameAdmin;
+        apartment.createBy = 'admin';
         apartment.idOwner = _idAdmin;
         apartment.photos = pathPhotos;
         this.apartmentService
