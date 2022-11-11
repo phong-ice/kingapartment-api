@@ -1,0 +1,120 @@
+.apartment-root {
+  width: 100%;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+
+.apartment-root .title {
+  font-size: 22px;
+  font-weight: 500;
+  color: black;
+}
+
+.apartment-root .tool-bar {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.apartment-root .input-search {
+  height: 50px;
+  margin-top: 10px;
+  margin-right: 10px;
+  max-width: 300px;
+}
+
+.apartment-root .input-search .btn-search {
+  min-width: 50px;
+  width: 80px;
+}
+
+.apartment-root .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.apartment-root .btn-plus {
+  bottom: 20px;
+  right: 40px;
+}
+
+.apartment-root .btn-plus i {
+  font-size: 100px;
+}
+
+.apartment-root .grid-data {
+  margin-top: 10;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.apartment-root .grid-data th {
+  text-align: center;
+}
+
+.apartment-root .grid-data td {
+  text-align: center;
+}
+
+.add-apartment-root {
+  width: 100%;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 50px;
+}
+
+.add-apartment-root .input-group {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.box-group {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.detail-root {
+  width: 100%;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+
+.detail-root .photo-apartment {
+  width: 100%;
+  height: 200px;
+  object-fit: scale-down;
+}
+
+.apartment-client-root {
+  width: 100%;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+
+.apartment-client-root .info-account {
+  display: flex;
+  align-items: center;
+}
+
+.apartment-client-root .img-avatar {
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}

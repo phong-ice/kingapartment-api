@@ -1,0 +1,111 @@
+<div class="detail-root">
+
+    <h3 class="mt-5">Chi tiết chung cư</h3>
+
+    <div id="carouselExampleIndicators" class="carousel slide mt-1 box-group" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {{#each apartment.photos}}
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{@index}}"
+                aria-label="Slide {{@index}}" class="active"></button>
+            {{/each}}
+        </div>
+        <div class="carousel-inner">
+            {{#each apartment.photos}}
+            <div class="carousel-item active">
+                <img src="{{this}}" class="photo-apartment" alt="...">
+            </div>
+            {{/each}}
+        </div>
+        <button class="carousel-control-prev btn btn-primary" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next btn btn-primary" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    {{#with apartment}}
+    <div class="box-group">
+        <h2>{{name}}</h2>
+        <div>{{address}}</div>
+    </div>
+    <div class="box-group">
+        <div class="d-flex justify-content-around">
+            <div class="d-flex flex-column text-center">
+                <span class="fw-normal text-secondary">Giá</span>
+                <span class="fw-bold">{{price}}</span>
+            </div>
+
+            <div class="d-flex flex-column text-center">
+                <span class="fw-normal text-secondary">Diện tích</span>
+                <span class="fw-bold">{{sqrt}}</span>
+            </div>
+
+            <div class="d-flex flex-column text-center">
+                <span class="fw-normal text-secondary">Số phòng ngủ</span>
+                <span class="fw-bold">{{sumBedroom}}</span>
+            </div>
+
+            <div class="d-flex flex-column text-center">
+                <span class="fw-normal text-secondary">Số toilet</span>
+                <span class="fw-bold">{{sumToilet}}</span>
+            </div>
+            <div class="d-flex flex-column text-center">
+                <span class="fw-normal text-secondary">Lượt xem</span>
+                <span class="fw-bold">{{countVisit}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="box-group">
+        <h4>Thông tin mô tả</h4>
+        <div>{{description}}</div>
+    </div>
+    {{/with}}
+    <div class="box-group">
+        <h4>Tạo bởi</h4>
+        {{#if accountOwner}}
+        <div class="d-flex justify-content-around">
+            <div class="d-flex flex-column text-center">
+                <img src="{{accountOwner.avatar}}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+            </div>
+            <div class="d-flex flex-column text-center">
+                <span class="fw-normal text-secondary">Tên</span>
+                <span class="fw-bold">{{accountOwner.fullname}}</span>
+            </div>
+
+            <div class="d-flex flex-column text-center">
+                <span class="fw-normal text-secondary">Địa chỉ email</span>
+                <span class="fw-bold">{{accountOwner.email}}</span>
+            </div>
+
+            <div class="d-flex flex-column text-center">
+                <span class="fw-normal text-secondary">Tổng chung cư</span>
+                <span class="fw-bold">{{accountOwner.countApartment}}</span>
+            </div>
+            {{#with apartment}}
+            <form method="post" class="form" action="/admin/apartment/delete">
+                <input type="text" name="_id" value="{{_id}}" hidden>
+                <button type="submit" class="btn btn-danger">Remove apartment</button>
+            </form>
+            {{/with}}
+        </div>
+        {{else}}
+        <div class="d-flex justify-content-around">
+            <div class="d-flex flex-column text-center">
+                <span class="fw-normal text-secondary">Tên</span>
+                <span class="fw-bold">{{accountAdmin.fullname}} (admin)</span>
+            </div>
+            {{#with apartment}}
+            <form method="post" class="form" action="/admin/apartment/delete">
+                <input type="text" name="_id" value="{{_id}}" hidden>
+                <button type="submit" class="btn btn-danger">Remove apartment</button>
+            </form>
+            {{/with}}
+        </div>
+        {{/if}}
+    </div>
+</div>

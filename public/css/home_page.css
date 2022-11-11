@@ -1,0 +1,7 @@
+.root-home {
+  width: 100%;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}

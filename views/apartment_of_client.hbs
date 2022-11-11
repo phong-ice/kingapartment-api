@@ -1,0 +1,54 @@
+<div class="apartment-client-root">
+    <div class="box-group info-account">
+        {{#with account}}
+        <div>
+            <img {{#if avatar}} src="{{avatar}}" {{else}}
+                src="https://store.playstation.com/store/api/chihiro/00_09_000/container/BE/nl/99/EP2402-CUSA05624_00-AV00000000000231/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720"
+                {{/if}} class="img-avatar" alt="...">
+        </div>
+        <div class="ms-3">
+            <h1>{{fullname}}</h1>
+            <div>
+                <i class="text-primary bi bi-envelope-fill"></i>
+                <span>{{email}}</span>
+            </div>
+            <div>
+                <i class="text-primary bi bi-house-heart-fill"></i>
+                <span>{{countApartment}}</span>
+            </div>
+        </div>
+        {{/with}}
+    </div>
+
+    <div class="box-group">
+        <table class="table mt-2">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Area</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Visit</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each apartments}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.createBy}}</td>
+                    <td>{{this.sqrt}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.visit}}</td>
+                    <td>
+                        <a href="/admin/apartment/detail/{{this._id}}"><button
+                                class="btn btn-primary">Detail</button></a>
+                        <button class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

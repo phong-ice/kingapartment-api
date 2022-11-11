@@ -1,0 +1,156 @@
+<script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-geocoder@1.1.1/dist/goong-geocoder.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-geocoder@1.1.1/dist/goong-geocoder.css" rel="stylesheet"
+    type="text/css" />
+
+<!-- Promise polyfill script is required -->
+<!-- to use Goong Geocoder in IE 11. -->
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+<div class="add-apartment-root">
+
+    <h3 class="mb-3">Thêm chung cư mới</h3>
+
+    <form method="post" enctype="multipart/form-data" action="insert" class="row g-3 needs-validation" novalidate>
+        <div class="input-group row">
+            <div class="col-md-6">
+                <label for="validationCustom01" class="form-label">Tên chung cư</label>
+                <input name="name" type="text" class="form-control" id="validationCustom01" required>
+                <div class="invalid-feedback">
+                    Vui lòng nhập tên chung cư
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustom02" class="form-label">Diện tích</label>
+                <input name="sqrt" type="text" class="form-control" id="validationCustom02" required>
+                <div class="invalid-feedback">
+                    Vui long nhập diện tích
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustomUsername" class="form-label">Số phòng ngủ</label>
+                <select name="sumBedroom" type="text" class="form-select" id="validationCustomUsername"
+                    aria-describedby="inputGroupPrepend" required>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <div class="invalid-feedback">
+                    Vui lòng chọn tổng số phòng ngủ của chung cư
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="validationSumtoilet" class="form-label">Số toilet</label>
+                <select name="sumToilet" type="text" class="form-select" id="validationSumtoilet"
+                    aria-describedby="inputGroupPrepend" required>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <div class="invalid-feedback">
+                    Vui lòng chọn tổng số toilet của chung cư
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustom03" class="form-label">Ảnh</label>
+                <input type="file" name="images" accept="image/*" class="form-control" id="validationCustom03" multiple
+                    required>
+                <div class="invalid-feedback">
+                    Vui lòng thêm ảnh chung cư
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="validationCustom04" class="form-label">Sđt liên hệ</label>
+                <input name="contactPhoneNumber" text="text" class="form-control" id="validationCustom04" required>
+                <div class="invalid-feedback">
+                    Vui long nhập số điện thoại liên hệ
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="validationCustom05" class="form-label">Giá</label>
+                <input name="price" type="text" placeholder="Đơn vị VNĐ" class="form-control" id="validationCustom05"
+                    required>
+                <div class="invalid-feedback">
+                    Vui lòng nhập giá
+                </div>
+            </div>
+        </div>
+        <div class="input-group row">
+            <div class="col-md-12">
+                <label for="inputAddress" class="form-label">Địa chỉ</label>
+                <div id="map" class="w-100"></div>
+                <input name="address" type="text" class="form-control" id="inputAddress" required>
+                <div class="invalid-feedback">
+                    Vui lòng nhập địa chỉ
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <label for="validationDesription" class="form-label">Mô tả</label>
+                <textarea name="description" type="text" class="form-control" id="validationDesription" required
+                    rows="5"></textarea>
+                <div class="invalid-feedback">
+                    Vui lòng nhập thông tin mô tả chung cư
+                </div>
+            </div>
+
+            <input type="text" name="lng" id="inputLongitude" class="form-control hidden">
+            <input type="text" name="lat" id="inputLatitude" class="form-control hidden">
+        </div>
+        <div class="col-12 mb-5">
+            <button class="btn btn-primary w-100 mt-3" type="submit">Add</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+
+    goongjs.accessToken = 'xlN6sDmthGefVDd8gduKHoPGFPhSYJKDcbfyRzGA';
+    //goongjs.accessToken = '8qzxZAuxcsctSlmOszInchP1A5GrmRBHJwCBCjO6';
+    var map = new goongjs.Map({
+        container: 'map',
+        style: 'https://tiles.goong.io/assets/goong_map_web.json',
+        center: [105.7960636, 21.0259542],
+        zoom: 13
+    });
+    // Add the control to the map.
+    const geoCoder = new GoongGeocoder({
+        accessToken: '9P89yXzclskTQiGKn0kFyY92Rk1JknAsfoGGlZ30',
+        goongjs: goongjs
+    })
+    map.addControl(geoCoder);
+    geoCoder.on('result', function (e) {
+        const localtion = e.result.result.geometry.location
+        const address = e.result.result.formatted_address
+        document.getElementById('inputAddress').value = address
+        document.getElementById('inputLongitude').value = localtion.lng
+        document.getElementById('inputLatitude').value = localtion.lat
+    })
+    geoCoder.on('clear', function () {
+        document.getElementById('inputAddress').value = ''
+        document.getElementById('inputLongitude').value = ''
+        document.getElementById('inputLatitude').value = ''
+    })
+</script>

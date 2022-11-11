@@ -1,0 +1,52 @@
+.account-root {
+  width: 100%;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+
+.account-root .title {
+  font-size: 22px;
+  font-weight: 500;
+  color: black;
+}
+
+.account-root .tool-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.account-root .input-search {
+  height: 50px;
+  margin-top: 10px;
+  margin-right: 10px;
+  max-width: 300px;
+}
+
+.account-root .input-search .btn-search {
+  min-width: 50px;
+  width: 80px;
+}
+
+.account-root .grid-data {
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.account-root .grid-data .img-avatar {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.account-root .grid-data th {
+  text-align: center;
+}
+
+.account-root .grid-data td {
+  text-align: center;
+}

@@ -1,0 +1,53 @@
+<nav class="sidebar">
+    <header>
+        <div class="image-text">
+            <i class="bi bi-house-heart-fill text-primary image"></i>
+            <div class="text header-text">
+                <span class="name">Chung cư Cầu giấy</span>
+                <span class="perfession">Manager</span>
+            </div>
+        </div>
+    </header>
+
+    {{#with admin}}
+    <div class="info-admin bg-primary">
+        <span style="font-size: 18px;color:white">{{fullname}}</span>
+        <span style="color:lightgray">{{username}}</span>
+    </div>
+    {{/with}}
+
+    <div class="menu-bar">
+        <div class="menu">
+            <ui class="menu-link">
+                <li class="nav-link">
+                    <a href="/admin/home">
+                        <i class="bi bi-kanban-fill icon"></i>
+                        <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="/admin/account">
+                        <i class="bi bi-people-fill icon"></i>
+                        <span class="text nav-text">Account</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="/admin/apartment">
+                        <i class="bi bi-building icon"></i>
+                        <span class="text nav-text">Apartment</span>
+                    </a>
+                </li>
+            </ui>
+        </div>
+        <div class="mode">
+            <ui class="menu-mode">
+                <li class="nav-link">
+                    <a href="/admin/logout">
+                        <i class="bi bi-box-arrow-left icon"></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>
+            </ui>
+        </div>
+    </div>
+</nav>

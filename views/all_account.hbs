@@ -1,0 +1,46 @@
+<div class="account-root">
+
+    <div class="tool-bar">
+        <h1>Account manager</h1>
+        <div></div>
+        <div class="input-group mb-3 input-search">
+            <input type="text" class="form-control" placeholder="Search" aria-label="Example text with button addon"
+                aria-describedby="button-addon1">
+            <button class="btn btn-primary btn-search" type="button" id="button-addon1"><i
+                    class="bi bi-search"></i></button>
+        </div>
+    </div>
+    <div class="grid-data">
+        <table class="table">
+            <thead>
+                <tr c>
+                    <th scope="col">#</th>
+                    <th scope="col">Avarar</th>
+                    <th scope="col">Full name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Sum apartment</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each accounts}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>
+                        <img {{#if this.avatar}} src="{{this.avatar}}" {{else}}
+                            src="https://store.playstation.com/store/api/chihiro/00_09_000/container/BE/nl/99/EP2402-CUSA05624_00-AV00000000000231/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720"
+                            {{/if}} class="img-avatar" alt="...">
+                    </td>
+                    <td>{{this.fullname}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.countApartment}}</td>
+                    <td>
+                        <a href="account/apartment/{{this._id}}"><button class="btn btn-primary">Detail</button></a>
+                        <button class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

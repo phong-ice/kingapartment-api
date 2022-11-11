@@ -1,0 +1,87 @@
+<div class="container mt-5 bg-white">
+
+    <h3>Search</h3>
+    {{!-- Search Input --}}
+    <form class="input-group mb-3" action="search" method="get" name="form-search">
+        <input type="text" id="input-search" class="form-control" placeholder="Pattern - enter something"
+            aria-label="Recipient's username" aria-describedby="button-addon2" name="pattern" value="{{this.pattern}}">
+        <button class="btn btn-outline-secondary" type="button" id="btn-search">Search</button>
+    </form>
+    <div id="div-message-err-pattern"></div>
+    {{!-- Table customer --}}
+    <div class="table-responsive-xl">
+        <table class="table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            {{#each accounts}}
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
+                                style="width: 45px; height: 45px" class="rounded-circle" />
+                            <div class="ms-3">
+                                <p class="fw-bold mb-1">{{this.fullname}}</p>
+                                <p class="text-muted mb-0">{{this.email}}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="fw-normal mb-1">{{this.username}}</p>
+                    </td>
+                    <td>
+                        <span class="fw-normal mb-1">{{this.password}}</span>
+                    </td>
+                    <td>{{this.phonenumber}}</td>
+                    <td>
+                        {{!-- Button delete --}}
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                            <button type="button" id="btn_delete" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" data-whatever="{{this._id}}"
+                                data-fullname="{{this.fullname}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                    <path fill-rule="evenodd"
+                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            {{/each}}
+        </table>
+    </div>
+</div>
+
+<script>
+    const alertPlaceholder = document.getElementById('div-message-err-pattern')
+    const _alert = (message, type) => {
+        // const wrapper = document.createElement('div')
+        alertPlaceholder.innerHTML = [
+            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+            `   <div>${message}</div>`,
+            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+            '</div>'
+        ].join('')
+        // alertPlaceholder.append(wrapper)
+    }
+
+    document.getElementById('btn-search').addEventListener('click', function () {
+        const pattern = document.getElementById('input-search').value
+        if (!pattern) {
+            _alert('Pattern can\'t be empty', 'danger')
+        } else {
+            document.forms['form-search'].submit()
+        }
+    })
+</script>
