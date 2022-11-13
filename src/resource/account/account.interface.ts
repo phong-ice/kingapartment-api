@@ -3,4 +3,5 @@ export default interface Account {
   fullname: string;
   email: string;
   countApartment: string;
+  isBlock: boolean;
 }

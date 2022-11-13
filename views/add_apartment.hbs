@@ -21,9 +21,10 @@
             </div>
             <div class="col-md-6">
                 <label for="validationCustom02" class="form-label">Diện tích</label>
-                <input name="sqrt" type="text" class="form-control" id="validationCustom02" required>
+                <input name="sqrt" pattern="[0-9]{1,}" placeholder="Đơn vị m2" class="form-control"
+                    id="validationCustom02" required>
                 <div class="invalid-feedback">
-                    Vui long nhập diện tích
+                    Điện tích không hợp lệ
                 </div>
             </div>
             <div class="col-md-6">
@@ -65,17 +66,18 @@
             </div>
             <div class="col-md-3">
                 <label for="validationCustom04" class="form-label">Sđt liên hệ</label>
-                <input name="contactPhoneNumber" text="text" class="form-control" id="validationCustom04" required>
+                <input name="contactPhoneNumber" pattern="[0-9]{10}" class="form-control" id="validationCustom04"
+                    required>
                 <div class="invalid-feedback">
-                    Vui long nhập số điện thoại liên hệ
+                    Số điện thoại liên hệ không hợp lệ
                 </div>
             </div>
             <div class="col-md-3">
                 <label for="validationCustom05" class="form-label">Giá</label>
-                <input name="price" type="text" placeholder="Đơn vị VNĐ" class="form-control" id="validationCustom05"
-                    required>
+                <input name="price" pattern="[0-9]{1,}" placeholder="Đơn vị VNĐ" class="form-control"
+                    id="validationCustom05" required>
                 <div class="invalid-feedback">
-                    Vui lòng nhập giá
+                    Giá tiền phải là số
                 </div>
             </div>
         </div>

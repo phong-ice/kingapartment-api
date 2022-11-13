@@ -7,6 +7,7 @@ const AccountSchema = new Schema({
   fullname: { type: String, require: true },
   email: { type: String, require: true, unique: true },
   countApartment: { type: String, require: false, default: '0' },
+  isBock: { type: Boolean, default: false },
 });
 
 interface AccountDocumnet extends Account, Document {}
