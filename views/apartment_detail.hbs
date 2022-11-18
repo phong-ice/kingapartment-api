@@ -87,10 +87,29 @@
                 <span class="fw-bold">{{accountOwner.countApartment}}</span>
             </div>
             {{#with apartment}}
-            <form method="post" class="form" action="/admin/apartment/delete">
-                <input type="text" name="_id" value="{{_id}}" hidden>
-                <button type="submit" class="btn btn-danger">Remove apartment</button>
-            </form>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Remove
+                apartment</button>
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Delete apartment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <span>Do you want remove "{{name}}" ?</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="apartment/delete/{{_id}}">
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {{/with}}
         </div>
         {{else}}
@@ -100,10 +119,29 @@
                 <span class="fw-bold">{{accountAdmin.fullname}} (admin)</span>
             </div>
             {{#with apartment}}
-            <form method="post" class="form" action="/admin/apartment/delete">
-                <input type="text" name="_id" value="{{_id}}" hidden>
-                <button type="submit" class="btn btn-danger">Remove apartment</button>
-            </form>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Remove
+                apartment</button>
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Delete apartment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <span>Do you want remove "{{name}}" ?</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="apartment/delete/{{_id}}">
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {{/with}}
         </div>
         {{/if}}

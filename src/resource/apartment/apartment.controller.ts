@@ -226,10 +226,9 @@ export default class ApartmentController implements Controller {
       }
     );
 
-    this.router.post('/delete', async (req: Request, res: Response) => {
+    this.router.get('/delete/:_id', async (req: Request, res: Response) => {
       try {
-        console.log(req.body);
-        const _id = req.body._id;
+        const _id = req.params._id;
         if (!_id) {
           return res.render('404_page', {
             layout: false,
@@ -238,7 +237,7 @@ export default class ApartmentController implements Controller {
         } else {
           const resultDelete = await this.apartmentService.deleteApartment(_id);
           const isDeleteSuccess = resultDelete.deletedCount > 0;
-          res.redirect('/admin/apartment');
+          res.redirect('back');
         }
       } catch (err) {
         return res.render('404_page', {
