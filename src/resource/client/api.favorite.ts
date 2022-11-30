@@ -8,7 +8,7 @@ export default class FavoriteApi {
 
   public async addApartmentFavorite(req: Request, res: Response) {
     try {
-      const idAccount = req.body.idAccount;
+      const idAccount = req.body.email;
       const idApartment = req.body.idApartment;
       if (!idAccount || !idApartment) {
         res.status(400).json({
@@ -36,7 +36,7 @@ export default class FavoriteApi {
   public async removeApartmentFavorite(req: Request, res: Response) {
     try {
       const idApartment = req.body.idApartment;
-      const idAccount = req.body.idAccount;
+      const idAccount = req.body.email;
       const result = await new FavoriteService().removeApartmentFavorite(
         idApartment,
         idAccount
@@ -61,7 +61,7 @@ export default class FavoriteApi {
 
   public async getListApartmentFavorite(req: Request, res: Response) {
     try {
-      const idAccount = req.body.idAccount;
+      const idAccount = req.body.email;
       const listFavorite = await new FavoriteService().getListApartmentFavorite(
         idAccount
       );

@@ -94,6 +94,14 @@ export default class ApartmentService {
     return this.apartmentModel.find({ idOwner: _id }).lean();
   }
 
+  public countApartmentAdmin() {
+    return this.apartmentModel.countDocuments({ createBy: 'admin' });
+  }
+
+  public countApartment() {
+    return this.apartmentModel.countDocuments({});
+  }
+
   public getApartmentNearest(
     longitude: number,
     latitude: number,

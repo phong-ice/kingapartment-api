@@ -3,23 +3,23 @@ import favoriteModel from './favorite.model';
 export default class FavoriteService {
   private favoriteModel = favoriteModel;
 
-  public addApartmentFavorite(idAccount: string, idAparment: string) {
+  public addApartmentFavorite(_email: string, idAparment: string) {
     return this.favoriteModel.create({
-      idAccount: idAccount,
+      email: _email,
       idApartment: idAparment,
     });
   }
 
-  public removeApartmentFavorite(_idApartment: string, _idAccount: string) {
+  public removeApartmentFavorite(_idApartment: string, _email: string) {
     return this.favoriteModel.findOneAndDelete({
       idApartment: _idApartment,
-      idAccount: _idAccount,
+      email: _email,
     });
   }
 
-  public getListApartmentFavorite(idAccount: string) {
+  public getListApartmentFavorite(_email: string) {
     return this.favoriteModel.find({
-      idAccount: idAccount,
+      email: _email,
     });
   }
 }
