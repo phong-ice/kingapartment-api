@@ -35,9 +35,11 @@ export default class FavoriteApi {
 
   public async removeApartmentFavorite(req: Request, res: Response) {
     try {
-      const idFovorite = req.body.id;
+      const idApartment = req.body.idApartment;
+      const idAccount = req.body.idAccount;
       const result = await new FavoriteService().removeApartmentFavorite(
-        idFovorite
+        idApartment,
+        idAccount
       );
       if (result) {
         res.status(200).json({
