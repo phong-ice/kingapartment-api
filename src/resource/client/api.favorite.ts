@@ -36,7 +36,7 @@ export default class FavoriteApi {
   public async removeApartmentFavorite(req: Request, res: Response) {
     try {
       const idFovorite = req.body.id;
-      const result = await this.favoriteService.removeApartmentFavorite(
+      const result = await new FavoriteService().removeApartmentFavorite(
         idFovorite
       );
       if (result) {
@@ -60,21 +60,18 @@ export default class FavoriteApi {
   public async getListApartmentFavorite(req: Request, res: Response) {
     try {
       const idAccount = req.body.idAccount;
-      const listFavorite = await this.favoriteService.getListApartmentFavorite(
+      const listFavorite = await new FavoriteService().getListApartmentFavorite(
         idAccount
       );
-      var listApartment: Array<any> = [];
-      listFavorite.forEach(async (favorite) => {
-        this.apartmentService
-          .getApartmentById(favorite.idApartment ?? '')
-          .then((apartment) => {
-            listApartment.push(apartment);
-          });
+      var listIds = listFavorite.map((favorite) => {
+        return favorite.idApartment ?? '';
       });
-      res.status(200).json({
-        apartments: listApartment,
-      });
+      var apartmentService = new ApartmentService();
+      var listApartment = await apartmentService.getListApartment(listIds);
+      res.status(200).json(listApartment);
     } catch (e) {
+      console.log(e);
+
       res.status(400).json({
         message: 'Has error happening. Please try again.',
         e,

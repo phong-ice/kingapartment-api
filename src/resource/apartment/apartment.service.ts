@@ -86,6 +86,10 @@ export default class ApartmentService {
     return this.apartmentModel.findById(_id).lean();
   }
 
+  public getListApartment(listId: Array<String>) {
+    return this.apartmentModel.find({ _id: { $in: listId } });
+  }
+
   public getApartmentByIdAccount(_id: string) {
     return this.apartmentModel.find({ idOwner: _id }).lean();
   }
@@ -118,8 +122,8 @@ export default class ApartmentService {
               lat: b.lat,
               lng: b.lng,
             });
-            if (distance1 < distance2) return 1;
-            if (distance1 > distance2) return 0;
+            if (distance1 > distance2) return 1;
+            if (distance1 < distance2) return 0;
             return 0;
           });
           resolve({ result: apartments });
