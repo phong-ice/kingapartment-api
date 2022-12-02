@@ -76,4 +76,8 @@ export default class AccountService {
       email: _email,
     });
   }
+
+  public countAccount() {
+    return this.accountModel.countDocuments({})
+  }
 }

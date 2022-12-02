@@ -1,9 +1,8 @@
-import { timeStamp } from 'console';
 import mongoose, { Schema } from 'mongoose';
 
 const schema = new Schema(
   {
-    idAccount: {
+    email: {
       type: String,
       require: true,
     },
