@@ -3,9 +3,6 @@ import ApartmentService from '../apartment/apartment.service';
 import { Request, Response } from 'express';
 
 export default class FavoriteApi {
-  private favoriteService = new FavoriteService();
-  private apartmentService = new ApartmentService();
-
   public async addApartmentFavorite(req: Request, res: Response) {
     try {
       const idAccount = req.body.email;
