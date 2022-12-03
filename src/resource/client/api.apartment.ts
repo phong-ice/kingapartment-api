@@ -32,9 +32,13 @@ export default class ApartmentApi {
 
   async searchApartment(req: Request, res: Response) {
     try {
-      const pattern = req.body.patternSearch;
+      const pattern = req.params.patternSearch;
+      console.log(req.query);
       if (pattern) {
         const result = await this.apartmentService.search(pattern);
+        res.status(200).json(result);
+      } else {
+        const result = await this.apartmentService.search('');
         res.status(200).json(result);
       }
     } catch (e) {

@@ -173,6 +173,27 @@ export default class ApartmentController implements Controller {
         }
       }
     );
+
+    this.router.post('/visit', (req: Request, res: Response) => {
+      try {
+        const idApartment = req.body.id;
+        if (idApartment) {
+          var result = this.apartmentService.visitApartment(idApartment);
+          console.log(result);
+          res.status(200).json({
+            message: 'Visited apartment',
+          });
+        } else {
+          res.status(400).json({
+            message: 'Missing id apartment',
+          });
+        }
+      } catch (e) {
+        res.status(400).json({
+          message: 'Some error happend, Please try again',
+        });
+      }
+    });
   }
 
   private initialiseRouter() {

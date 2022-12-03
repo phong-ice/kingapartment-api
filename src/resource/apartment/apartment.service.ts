@@ -43,10 +43,8 @@ export default class ApartmentService {
   public async search(pattern: string): Promise<any> {
     const condition = {
       $or: [
-        { name: { $regex: pattern } },
-        { address: { $regex: pattern } },
-        { price: { $regex: pattern } },
-        { sqrt: { $regex: pattern } },
+        { name: { $regex: pattern, $options: 'i' } },
+        { address: { $regex: pattern, $options: 'i' } },
       ],
     };
     return new Promise((resolve, rejects) => {
@@ -56,7 +54,7 @@ export default class ApartmentService {
           this.apartmentModel
             .find(condition)
             .then((apartments) => {
-              resolve({ apartments, sumRecord: sumDocument });
+              resolve(apartments);
             })
             .catch((err) => rejects(err));
         })
@@ -100,6 +98,13 @@ export default class ApartmentService {
 
   public countApartment() {
     return this.apartmentModel.countDocuments({});
+  }
+
+  public visitApartment(idApartment: string) {
+    return this.apartmentModel
+      .findOneAndUpdate({ id: idApartment }, { $inc: { countVisit: 1 } })
+      .maxTimeMS(100000)
+      .exec();
   }
 
   public getApartmentNearest(

@@ -10,6 +10,13 @@ export default class FavoriteService {
     });
   }
 
+  public checkApartmentFavorite(_email: string, idAparment: string) {
+    return this.favoriteModel.findOne({
+      idApartment: idAparment,
+      email: _email,
+    });
+  }
+
   public removeApartmentFavorite(_idApartment: string, _email: string) {
     return this.favoriteModel.findOneAndDelete({
       idApartment: _idApartment,
