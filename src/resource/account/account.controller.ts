@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import express, { Router, Request, Response } from 'express';
 import Controller from '../../utils/interface/controller.interface';
 import Account from './account.interface';
 import AccountService from './account.service';
@@ -8,7 +8,6 @@ import { upload } from '../../utils/img_helper';
 import 'dotenv/config';
 import mongoose from 'mongoose';
 import Grid from 'gridfs-stream';
-
 export default class AccountController implements Controller {
   path: string = '/account';
   router: Router = Router();
@@ -127,13 +126,14 @@ export default class AccountController implements Controller {
           const pattern = String(req.query.pattern);
           const page = Number(req.query.page);
           const pageSize = Number(req.query.page_size);
-          const resultObject = Object(
-            await this.accountService.search(pattern, page, pageSize)
+          const listAccount = await this.accountService.search(
+            pattern,
+            page,
+            pageSize
           );
-          res.render('account_search', {
-            title: 'Customer manager',
-            accounts: resultObject.result,
-            totalPage: resultObject.totalPage,
+          res.render('all_account', {
+            title: 'Account manager',
+            accounts: listAccount,
             page: page,
             pattern: pattern,
             admin: req.body.info,
@@ -152,7 +152,6 @@ export default class AccountController implements Controller {
       verifyAccessToken,
       async (req: Request, res: Response) => {
         try {
-          console.log(req.body.info);
           const page = Number(req.query.page);
           const pageSize = Number(req.query.page_size);
           const result = Object(
@@ -166,7 +165,8 @@ export default class AccountController implements Controller {
             admin: req.body.info,
           });
         } catch (err) {
-          res.render('404_page', { titlePage: '404 not found' });
+          console.log(err);
+          res.render('404_page', { titlePage: '404 not found', layout: false });
         }
       }
     );
@@ -187,6 +187,24 @@ export default class AccountController implements Controller {
             apartments: apartments,
           });
         } catch (e) {}
+      }
+    );
+
+    this.router.get(
+      '/block/:idAccount',
+      verifyAccessToken,
+      (req: Request, res: Response) => {
+        try {
+          var idAccount = req.params.idAccount;
+          var isBlock = req.query.isBlock as unknown as boolean;
+          this.accountService.blockAccount(idAccount, isBlock);
+          res.redirect('back');
+        } catch (e) {
+          res.render('404_page', {
+            layout: false,
+            titlePage: '404 not found',
+          });
+        }
       }
     );
   }

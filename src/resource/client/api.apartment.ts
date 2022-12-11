@@ -4,6 +4,8 @@ import { Request, Response } from 'express';
 export default class ApartmentApi {
   private apartmentService = new ApartmentService();
 
+  constructor() {}
+
   async deletApartment(req: Request, res: Response) {
     try {
       const idApartment = req.body.idApartment;

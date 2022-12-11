@@ -3,12 +3,14 @@
     <div class="tool-bar">
         <h1>Account manager</h1>
         <div></div>
-        <div class="input-group mb-3 input-search">
-            <input type="text" class="form-control" placeholder="Search" aria-label="Example text with button addon"
-                aria-describedby="button-addon1">
-            <button class="btn btn-primary btn-search" type="button" id="button-addon1"><i
-                    class="bi bi-search"></i></button>
-        </div>
+        <form action="/admin/account/search" method="get">
+            <div class="input-group mb-3 input-search">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Example text with button addon"
+                    aria-describedby="button-addon1" value="{{pattern}}" name="pattern">
+                <button class="btn btn-primary btn-search" type="button submit" id="button-addon1"><i
+                        class="bi bi-search"></i></button>
+            </div>
+        </form>
     </div>
     <div class="grid-data">
         <table class="table">
@@ -36,7 +38,39 @@
                     <td>{{this.countApartment}}</td>
                     <td>
                         <a href="account/apartment/{{this._id}}"><button class="btn btn-primary">Detail</button></a>
-                        <button class="btn btn-danger">Block</button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop{{this._id}}">{{#if this.isBock}} Unblock {{else}} Block
+                            {{/if}}</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop{{this._id}}" data-bs-backdrop="static"
+                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">{{this.fullname}}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span>Do you want {{#if this.isBock}} unblock {{else}} block {{/if}}
+                                            {{this.fullname}}
+                                            ?</span>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form method="get" action="account/block/{{this._id}}">
+                                            <input value="{{#if this.isBock}}false{{else}}true{{/if}}" name="isBlock"
+                                                hidden />
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-danger">{{#if this.isBock}} Unblock
+                                                {{else}} Block
+                                                {{/if}}</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 {{/each}}

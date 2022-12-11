@@ -7,12 +7,12 @@ import FavoriteApi from './api.favorite';
 import ApartmentApi from './api.apartment';
 import ApartmentService from '../apartment/apartment.service';
 import FavoriteService from '../../favorite/favorite.service';
+import { io } from 'socket.io-client';
 
 export default class ClientController implements Controller {
   path: string = '/api';
   router: Router = Router();
   private accountService = new AccountService();
-  private apiFovorite = new FavoriteApi();
   private apartmentService = new ApartmentService();
   private favoriteService = new FavoriteService();
 
@@ -28,12 +28,19 @@ export default class ClientController implements Controller {
         var _account = req.body as Account;
         const email = _account.email;
         var account = await this.accountService.getAccountByEmail(email);
-        console.log(_account);
-        console.log(account);
         if (account) {
-          res.status(200).json({ account });
+          if (account.isBock) {
+            res.status(400).json({ message: 'Your account has been block.' });
+          } else {
+            res.status(200).json({ account });
+          }
         } else if (!account && email && _account.fullname) {
           account = await this.accountService.insertAccount(_account);
+          const socket = io('http://localhost:3000');
+          socket.emit('KEY_NOTIFICATION', {
+            title: 'New client',
+            message: `"${_account.fullname}" come our system \n email: ${_account.email}`,
+          });
           res.status(200).json({ account });
         } else {
           res.status(400).json({
@@ -148,6 +155,11 @@ export default class ClientController implements Controller {
             idAccount
           );
           if (result) {
+            var socket = io();
+            socket.emit('KEY_NOTIFICATION', {
+              title: 'Remove apartment',
+              message: `${result.createBy} removed apartment "${result.name}"`,
+            });
             res.status(200).json({
               message: 'Apartment deleted!',
               result: result,

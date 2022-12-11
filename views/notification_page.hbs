@@ -1,0 +1,12 @@
+<div id="container_notification" class="account-root">
+    {{#each notifications}}
+    <div class="rounded-3 bg-white ps-3 pe-3 pt-2 pb-2 mb-3" role="alert">
+        <div class="d-flex justify-content-between">
+            <h6 class="alert-heading">{{this.title}}</h6>
+            <span class="text-secondary">{{this.time}}</span>
+        </div>
+        <hr>
+        <p class="mb-0">{{this.message}}</p>
+    </div>
+    {{/each}}
+</div>

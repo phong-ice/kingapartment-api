@@ -6,12 +6,12 @@
         <div class="carousel-indicators">
             {{#each apartment.photos}}
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{@index}}"
-                aria-label="Slide {{@index}}" class="active"></button>
+                aria-label="Slide {{@index}}"></button>
             {{/each}}
         </div>
         <div class="carousel-inner">
             {{#each apartment.photos}}
-            <div class="carousel-item active">
+            <div class="carousel-item">
                 <img src="{{this}}" class="photo-apartment" alt="...">
             </div>
             {{/each}}

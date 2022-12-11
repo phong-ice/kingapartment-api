@@ -7,11 +7,16 @@ import { STATUS_SUCCESS, STATUS_FAILED } from '../../utils/const';
 import { signAccessToken, signRefreshToken } from '../../utils/jwt_helper';
 import ApartmentController from '../apartment/apartment.controller';
 import { verifyAccessToken } from '../../middleware/jwt.middleware';
-
+import ApartmentService from '../apartment/apartment.service';
+import AccountService from '../account/account.service';
+import NotificationService from '../notification/notification.service';
 export default class AdminController implements Controller {
   public path: string = '/admin';
   public router: Router = Router();
   private adminService = new AdminService();
+  private apartmentService = new ApartmentService();
+  private accountService = new AccountService();
+  private notificationService = new NotificationService();
 
   constructor() {
     this.initialiseRouter();
@@ -38,8 +43,40 @@ export default class AdminController implements Controller {
     this.router.get(
       '/home',
       verifyAccessToken,
-      (req: Request, res: Response) => {
-        res.render('home', { titlePage: 'Dashboard', admin: req.body.info });
+      async (req: Request, res: Response) => {
+        var _apartmentAdmin = 0;
+        var _totalApartment = 0;
+        var _totalClient = 0;
+        try {
+          _totalApartment = await this.apartmentService.countApartment();
+          _apartmentAdmin = await this.apartmentService.countApartmentAdmin();
+          _totalClient = await this.accountService.countAccount();
+        } catch (e) {}
+        res.render('home', {
+          titlePage: 'Dashboard',
+          admin: req.body.info,
+          apartmentAdmin: _apartmentAdmin,
+          apartmentClient: _totalApartment - _apartmentAdmin,
+          totalClient: _totalClient,
+        });
+      }
+    );
+
+    this.router.get(
+      '/notification',
+      verifyAccessToken,
+      async (req: Request, res: Response) => {
+        this.notificationService
+          .getListNotification()
+          .then((listNoti) => {
+            console.log(listNoti);
+            res.render('notification_page', {
+              titlePage: 'Notification',
+              admin: req.body.info,
+              notifications: listNoti,
+            });
+          })
+          .catch((e) => {});
       }
     );
 

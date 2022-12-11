@@ -8,7 +8,7 @@ export default class AccountService {
     return this.accountModel.create(account);
   }
 
-  public async updateAccount(id: string, account: Account) {
+  public updateAccount(id: string, account: Account) {
     return this.accountModel.updateOne({ _id: id }, account);
   }
 
@@ -48,23 +48,7 @@ export default class AccountService {
     const condition = {
       $or: [{ fullname: { $regex: pattern } }, { email: { $regex: pattern } }],
     };
-    return new Promise((resolve, rejects) => {
-      this.accountModel
-        .countDocuments(condition)
-        .then((sumDocument) => {
-          const _totalPage = Math.ceil(sumDocument / _pageSize);
-          this.accountModel
-            .find(condition)
-            .lean()
-            .skip((_page - 1) * _pageSize)
-            .limit(_pageSize)
-            .then((result) => {
-              resolve({ result, totalPage: _totalPage });
-            })
-            .catch((err) => rejects(err));
-        })
-        .catch((err) => rejects(err));
-    });
+    return this.accountModel.find(condition).lean();
   }
 
   public async findAccountById(id: string) {
@@ -78,6 +62,14 @@ export default class AccountService {
   }
 
   public countAccount() {
-    return this.accountModel.countDocuments({})
+    return this.accountModel.countDocuments({});
+  }
+
+  public blockAccount(idAccount: string, _isBlock: boolean) {
+    this.accountModel
+      .findOneAndUpdate({ _id: idAccount }, { isBock: _isBlock })
+      .then((result) => {
+        //console.log(`old ${result}`);
+      });
   }
 }

@@ -10,6 +10,7 @@ import 'dotenv/config';
 import AccountService from '../account/account.service';
 import { verifyAccessToken } from '../../middleware/jwt.middleware';
 import AdminService from '../admin/admin.service';
+import { io } from 'socket.io-client';
 
 export default class ApartmentController implements Controller {
   path: string = '/apartment';
@@ -158,8 +159,14 @@ export default class ApartmentController implements Controller {
             const apartment = await this.apartmentService.insertApartment(
               _apartment
             );
-            account.countApartment += 1;
-            this.accountSerive.updateAccount(_idAccount, account);
+            var _countApartment = parseInt(account.countApartment);
+            account.countApartment = _countApartment + 1 + '';
+            var socket = io();
+            socket.emit('KEY_NOTIFICATION', {
+              title: 'Upload apartment',
+              message: `${account.fullname} uploaded new apartment`,
+            });
+            await this.accountSerive.updateAccount(_idAccount, account);
             res.status(200).json({
               message: 'Upload succes!',
               apartment: apartment,
@@ -328,6 +335,30 @@ export default class ApartmentController implements Controller {
         } catch (err) {
           console.log(err);
           res.render('404_page', {
+            titlePage: '404 not found',
+            layout: false,
+          });
+        }
+      }
+    );
+
+    this.router.get(
+      '/search',
+      verifyAccessToken,
+      async (req: Request, res: Response) => {
+        try {
+          const pattern = String(req.query.pattern);
+          const result = await this.apartmentService.search(
+            pattern.toLowerCase()
+          );
+          res.render('apartment_manager', {
+            apartments: result,
+            pattern: pattern,
+            titlePage: 'Apartment manager',
+            admin: req.body.info,
+          });
+        } catch (err) {
+          return res.render('404_page', {
             titlePage: '404 not found',
             layout: false,
           });

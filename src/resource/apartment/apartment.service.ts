@@ -53,6 +53,7 @@ export default class ApartmentService {
         .then((sumDocument) => {
           this.apartmentModel
             .find(condition)
+            .lean()
             .then((apartments) => {
               resolve(apartments);
             })

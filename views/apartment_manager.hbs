@@ -3,12 +3,14 @@
     <div class="tool-bar">
         <h1>Apartment manager</h1>
         <div></div>
-        <div class="input-group mb-3 input-search">
-            <input type="text" class="form-control" placeholder="Search" aria-label="Example text with button addon"
-                aria-describedby="button-addon1">
-            <button class="btn btn-primary btn-search" type="button" id="button-addon1"><i
-                    class="bi bi-search"></i></button>
-        </div>
+        <form method="get" action="/admin/apartment/search">
+            <div class="input-group mb-3 input-search">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Example text with button addon"
+                    aria-describedby="button-addon1" value="{{pattern}}" name="pattern">
+                <button class="btn btn-primary btn-search" type="submit button" id="button-addon1"><i
+                        class="bi bi-search"></i></button>
+            </div>
+        </form>
     </div>
 
     <div>
@@ -36,11 +38,12 @@
                         <td>{{this.sqrt}}</td>
                         <td>{{this.price}}</td>
                         <td>
-                            <a href="apartment/detail/{{this._id}}"><button class="btn btn-primary">Detail</button></a>
+                            <a href="/admin/apartment/detail/{{this._id}}"><button
+                                    class="btn btn-primary">Detail</button></a>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop">Delete</button>
+                                data-bs-target="#staticBackdrop{{this._id}}">Delete</button>
                             <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                            <div class="modal fade" id="staticBackdrop{{this._id}}" data-bs-backdrop="static"
                                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                 aria-hidden="true">
                                 <div class="modal-dialog">
@@ -56,7 +59,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Close</button>
-                                            <a href="apartment/delete/{{this._id}}"><button type="button"
+                                            <a href="/admin/apartment/delete/{{this._id}}"><button type="button"
                                                     class="btn btn-danger">Delete</button></a>
                                         </div>
                                     </div>

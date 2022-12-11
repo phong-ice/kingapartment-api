@@ -38,6 +38,13 @@
                     </a>
                 </li>
             </ui>
+            <li class="nav-link">
+                <a href="/admin/notification">
+                    <i class="bi bi-bell-fill icon"></i>
+                    <span class="text nav-text">Notification</span>
+                    <div id="circle_noti" class="circle_noti" hidden></div>
+                </a>
+            </li>
         </div>
         <div class="mode">
             <ui class="menu-mode">
@@ -51,3 +58,68 @@
         </div>
     </div>
 </nav>
+
+<div id="container_toast" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong id="title" class="me-auto">Bootstrap</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div id="message" class="toast-body">
+            Hello, world! This is a toast message.
+        </div>
+    </div>
+</div>
+
+<script>
+    const socket = io();
+    var listNoti = []
+    socket.on("notification", (arg) => {
+        reloadListNotification(arg)
+        var element = document.getElementById("circle_noti")
+        let hidden = element.getAttribute("hidden");
+        element.removeAttribute("hidden");
+        const containerToast = document.getElementById("container_toast")
+        containerToast.innerHTML = ""
+        if (listNoti.length > 2) listNoti.splice(2, 1)
+        listNoti.unshift(arg)
+        var listIdToast = []
+        listNoti.forEach((noti, index) => {
+            console.log(listNoti.length)
+            var idLiveToast = `liveToast_${index}`
+            var html = `<div id="${idLiveToast}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+            <strong id="title" class="me-auto">${noti.title}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div id="message" class="toast-body">
+            ${noti.message}
+            </div>
+            </div>`
+            containerToast.innerHTML += html
+            listIdToast.push(idLiveToast)
+        })
+        listIdToast.forEach((idToast) => {
+            const toastLiveExample = document.getElementById(idToast)
+            const toast = new bootstrap.Toast(toastLiveExample)
+            toast.show()
+        })
+    })
+
+    function reloadListNotification(arg) {
+        var container = document.getElementById('container_notification')
+        if (container) {
+            var htmlAddOn = `
+            <div class="rounded-3 bg-white ps-3 pe-3 pt-2 pb-2 mb-3" role="alert">
+        <div class="d-flex justify-content-between">
+            <h6 class="alert-heading">${arg.title}</h6>
+            <span class="text-secondary">${arg.time}</span>
+        </div>
+        <hr>
+        <p class="mb-0">${arg.message}</p>
+    </div>`
+            htmlAddOn += container.innerHTML
+            container.innerHTML = htmlAddOn
+        }
+    }
+</script>
