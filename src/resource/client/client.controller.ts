@@ -3,11 +3,10 @@ import Controller from '../../utils/interface/controller.interface';
 import AccountService from '../account/account.service';
 import Account from '../account/account.interface';
 import ApartmentController from '../apartment/apartment.controller';
-import FavoriteApi from './api.favorite';
-import ApartmentApi from './api.apartment';
 import ApartmentService from '../apartment/apartment.service';
 import FavoriteService from '../../favorite/favorite.service';
 import { io } from 'socket.io-client';
+import 'dotenv/config';
 
 export default class ClientController implements Controller {
   path: string = '/api';
@@ -36,7 +35,7 @@ export default class ClientController implements Controller {
           }
         } else if (!account && email && _account.fullname) {
           account = await this.accountService.insertAccount(_account);
-          const socket = io('http://localhost:3000');
+          const socket = io(process.env.BASE_URL ?? 'http://localhost:3000');
           socket.emit('KEY_NOTIFICATION', {
             title: 'New client',
             message: `"${_account.fullname}" come our system \n email: ${_account.email}`,
@@ -155,7 +154,7 @@ export default class ClientController implements Controller {
             idAccount
           );
           if (result) {
-            var socket = io();
+            const socket = io(process.env.BASE_URL ?? 'http://localhost:3000');
             socket.emit('KEY_NOTIFICATION', {
               title: 'Remove apartment',
               message: `${result.createBy} removed apartment "${result.name}"`,

@@ -161,7 +161,7 @@ export default class ApartmentController implements Controller {
             );
             var _countApartment = parseInt(account.countApartment);
             account.countApartment = _countApartment + 1 + '';
-            var socket = io();
+            const socket = io(process.env.BASE_URL ?? 'http://localhost:3000');
             socket.emit('KEY_NOTIFICATION', {
               title: 'Upload apartment',
               message: `${account.fullname} uploaded new apartment`,
